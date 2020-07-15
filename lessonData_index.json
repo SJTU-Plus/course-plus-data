@@ -1,0 +1,37 @@
+[
+    {
+        "year": "2018-2019",
+        "semester": "1",
+        "updated_at": "2020-02-05"
+    },
+    {
+        "year": "2018-2019",
+        "semester": "2",
+        "updated_at": "2020-02-05"
+    },
+    {
+        "year": "2018-2019",
+        "semester": "3",
+        "updated_at": "2020-02-05"
+    },
+    {
+        "year": "2019-2020",
+        "semester": "1",
+        "updated_at": "2020-02-05"
+    },
+    {
+        "year": "2019-2020",
+        "semester": "2",
+        "updated_at": "2020-02-05"
+    },
+    {
+        "year": "2019-2020",
+        "semester": "3",
+        "updated_at": "2020-07-06"
+    },
+    {
+        "year": "2020-2021",
+        "semester": "1",
+        "updated_at": "2020-09-07"
+    }
+]
