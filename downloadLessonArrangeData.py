@@ -1,13 +1,11 @@
 import asyncio
 import json
-from functools import reduce
 from math import ceil
 from time import time
-from django.template.base import kwarg_re
-from numpy.core.defchararray import less
-from tqdm import tqdm
+
 from loguru import logger
 from requests import session
+from tqdm import tqdm
 
 # 在此填入i.sjtu.edu.cn的cookies
 cookies = {
