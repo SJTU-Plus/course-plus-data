@@ -96,7 +96,7 @@ async def main():
         lesson_data += resp.json()['items']
 
     with open(FILENAME, "w", encoding='utf8') as f:
-        json.dump(lesson_data, f, ensure_ascii=False)
+        json.dump(lesson_data, f, ensure_ascii=False, indent=True)
 
     assert total_count == len(lesson_data)
     logger.info('《{}学年第{}学期课程信息》已经成功保存至文件"{}"，共包含课程{}门'.format(ACADEMIC_YEAR, SEMESTER, FILENAME, len(lesson_data)))
