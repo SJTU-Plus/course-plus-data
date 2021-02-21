@@ -52,11 +52,13 @@
     {
         "year": "2020-2021",
         "semester": "1",
-        "updated_at": "2020-09-16"
+        "updated_at": "2020-09-16",
+        "first_day": "2020-09-07"
     },
     {
         "year": "2020-2021",
         "semester": "2",
-        "updated_at": "2020-12-11"
+        "updated_at": "2020-12-07",
+        "first_day": "2021-02-22"
     }
 ]
