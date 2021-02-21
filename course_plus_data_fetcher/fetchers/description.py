@@ -12,6 +12,15 @@ from .base import Fetcher
 from ..session import Session
 
 
+async def gather_with_concurrency(n, *tasks):
+    semaphore = asyncio.Semaphore(n)
+
+    async def sem_task(task):
+        async with semaphore:
+            return await task
+    return await asyncio.gather(*(sem_task(task) for task in tasks))
+
+
 class DescriptionFetcher(Fetcher):
     @staticmethod
     def set_argparse(parser: ArgumentParser):
@@ -91,7 +100,7 @@ class DescriptionFetcher(Fetcher):
     @staticmethod
     def _parse_detail(src: str):
         def _parse_kv(e: Tag):
-            f = lambda x: [item.text.strip() for item in e.find_all(x)]
+            def f(x): return [item.text.strip() for item in e.find_all(x)]
             return {k: v for k, v in zip(f("td"), f("th"))}
 
         def _parse_home(e: Tag):
@@ -135,7 +144,7 @@ class DescriptionFetcher(Fetcher):
         lessons = reduce(lambda x, y: {**(x if x else {}), **y}, raw_lessons)
 
         logging.info("Fetching details.")
-        raw_details = await asyncio.gather(*(self._get_detail(lesson_id) for lesson_id in lessons.values()))
+        raw_details = await gather_with_concurrency(100, *(self._get_detail(lesson_id) for lesson_id in lessons.values()))
 
         logging.info("Parsing details.")
         details = list(map(self._parse_detail, raw_details))

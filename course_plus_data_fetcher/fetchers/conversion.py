@@ -32,6 +32,10 @@ class ConversionFetcher(Fetcher):
             "queryModel.currentPage": page_num,
             "queryModel.sortName": "xh asc ,thkcid,tkkcid",
             "queryModel.sortOrder": "asc",
+            "jg_id" : "",
+            "kch": "",
+            "tybj": "",
+            "kcglbm_id": ""
         }
         params = {
             'doType': 'query',
