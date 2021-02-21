@@ -1,64 +1,64 @@
 [
-    {
-        "year": "2016-2017",
-        "semester": "1",
-        "updated_at": "2020-09-16"
-    },
-    {
-        "year": "2016-2017",
-        "semester": "2",
-        "updated_at": "2020-09-16"
-    },
-    {
-        "year": "2017-2018",
-        "semester": "1",
-        "updated_at": "2020-09-16"
-    },
-    {
-        "year": "2017-2018",
-        "semester": "2",
-        "updated_at": "2020-09-16"
-    },
-    {
-        "year": "2018-2019",
-        "semester": "1",
-        "updated_at": "2020-09-16"
-    },
-    {
-        "year": "2018-2019",
-        "semester": "2",
-        "updated_at": "2020-09-16"
-    },
-    {
-        "year": "2018-2019",
-        "semester": "3",
-        "updated_at": "2020-09-16"
-    },
-    {
-        "year": "2019-2020",
-        "semester": "1",
-        "updated_at": "2020-09-16"
-    },
-    {
-        "year": "2019-2020",
-        "semester": "2",
-        "updated_at": "2020-09-16"
-    },
-    {
-        "year": "2019-2020",
-        "semester": "3",
-        "updated_at": "2020-09-16"
-    },
-    {
-        "year": "2020-2021",
-        "semester": "1",
-        "updated_at": "2020-09-16",
-        "first_day": "2020-09-07"
-    },
-    {
-        "year": "2020-2021",
-        "semester": "2",
-        "updated_at": "2020-12-07",
-        "first_day": "2021-02-22"
-    }
+ {
+  "year": "2016-2017",
+  "semester": "1",
+  "updated_at": "2020-09-16"
+ },
+ {
+  "year": "2016-2017",
+  "semester": "2",
+  "updated_at": "2020-09-16"
+ },
+ {
+  "year": "2017-2018",
+  "semester": "1",
+  "updated_at": "2020-09-16"
+ },
+ {
+  "year": "2017-2018",
+  "semester": "2",
+  "updated_at": "2020-09-16"
+ },
+ {
+  "year": "2018-2019",
+  "semester": "1",
+  "updated_at": "2020-09-16"
+ },
+ {
+  "year": "2018-2019",
+  "semester": "2",
+  "updated_at": "2020-09-16"
+ },
+ {
+  "year": "2018-2019",
+  "semester": "3",
+  "updated_at": "2020-09-16"
+ },
+ {
+  "year": "2019-2020",
+  "semester": "1",
+  "updated_at": "2020-09-16"
+ },
+ {
+  "year": "2019-2020",
+  "semester": "2",
+  "updated_at": "2020-09-16"
+ },
+ {
+  "year": "2019-2020",
+  "semester": "3",
+  "updated_at": "2020-09-16"
+ },
+ {
+  "year": "2020-2021",
+  "semester": "1",
+  "updated_at": "2020-09-16",
+  "first_day": "2020-09-07"
+ },
+ {
+  "year": "2020-2021",
+  "semester": "2",
+  "updated_at": "2021-02-21",
+  "first_day": "2021-02-22"
+ }
 ]
