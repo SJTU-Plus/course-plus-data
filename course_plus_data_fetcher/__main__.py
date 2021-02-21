@@ -36,7 +36,7 @@ async def main(args: argparse.Namespace):
 
     logging.info(f"Writing to {args.output_file}.")
     with open(args.output_file, mode="w") as f:
-        json.dump(data, f, ensure_ascii=False)
+        json.dump(data, f, ensure_ascii=False, indent=1)
 
     logging.info("Done.")
 
