@@ -1,5 +1,6 @@
 # course-plus-data
-
+# folk from skyzh/course-plus-data
+# reconfigure by ToolmanP
 Data for Course+.
 
 ## Usage
