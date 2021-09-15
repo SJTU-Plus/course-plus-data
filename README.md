@@ -1,10 +1,10 @@
 # course-plus-data
-# folk from skyzh/course-plus-data
-# reconfigure by ToolmanP
-Data for Course+.
+## Folk from skyzh/course-plus-data.
+## Reconfigured and Maintained By ToolmanP.
+## My First Attempt of Docker Implementation.
+ Data for Course+.
 
 ## Usage
-
 ```
 export SJTU_USER=xxx
 export SJTU_PASS=xxx
