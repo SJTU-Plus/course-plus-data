@@ -8,8 +8,8 @@ from typing import List, Optional
 from httpx import ReadTimeout
 
 from .base import Fetcher
-from ..consts import TRIMESTER_MAP
-from ..session import Session
+from .consts import TRIMESTER_MAP
+from .session import FetchSession
 
 
 class ArrangeFetcher(Fetcher):
@@ -17,9 +17,9 @@ class ArrangeFetcher(Fetcher):
     def set_argparse(parser: ArgumentParser):
         parser.add_argument("year", type=int)
         parser.add_argument("trimester", type=int)
-        parser.add_argument("page_size", type=int, default=3000)
+        parser.add_argument("page_size", type=int, default=10000)
 
-    def __init__(self, session: Session, args: Namespace):
+    def __init__(self, session: FetchSession, args: Namespace):
         super().__init__(session, args)
 
         self.year: int = args.year
