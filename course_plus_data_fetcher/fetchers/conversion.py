@@ -6,11 +6,8 @@ from functools import reduce
 from typing import List
 from httpx import ReadTimeout
 
-# noinspection PyProtectedMember
-from bs4 import BeautifulSoup, Tag
-
 from .base import Fetcher
-from ..session import Session
+from .session import FetchSession
 
 
 class ConversionFetcher(Fetcher):
@@ -18,7 +15,7 @@ class ConversionFetcher(Fetcher):
     def set_argparse(parser: ArgumentParser):
         parser.add_argument("page_size", type=int, default=3000)
 
-    def __init__(self, session: Session, args: Namespace):
+    def __init__(self, session: FetchSession, args: Namespace):
         super().__init__(session, args)
         self.page_size: int = args.page_size
 
