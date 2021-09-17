@@ -5,8 +5,7 @@ from argparse import ArgumentParser, Namespace
 from functools import reduce
 from typing import List
 
-# noinspection PyProtectedMember
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup,Tag
 
 from .base import Fetcher
 from .session import FetchSession
