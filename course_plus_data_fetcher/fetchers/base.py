@@ -1,8 +1,7 @@
 from abc import ABC, abstractmethod
 from argparse import ArgumentParser, Namespace
 from typing import Dict, Type
-
-from ..session import Session
+from .session import FetchSession
 
 
 class Fetcher(ABC):
@@ -11,7 +10,7 @@ class Fetcher(ABC):
         fetchers[cls.__name__.replace("Fetcher", "").lower()] = cls
 
     @abstractmethod
-    def __init__(self, session: Session, args: Namespace): ...
+    def __init__(self, session: FetchSession, args: Namespace): ...
 
     @abstractmethod
     async def fetch(self): ...
@@ -22,3 +21,4 @@ class Fetcher(ABC):
 
 
 fetchers: Dict[str, Type[Fetcher]] = {}
+
