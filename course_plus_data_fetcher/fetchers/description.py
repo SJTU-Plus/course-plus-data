@@ -9,7 +9,7 @@ from typing import List
 from bs4 import BeautifulSoup, Tag
 
 from .base import Fetcher
-from ..session import Session
+from .session import FetchSession
 
 
 async def gather_with_concurrency(n, *tasks):
@@ -26,7 +26,7 @@ class DescriptionFetcher(Fetcher):
     def set_argparse(parser: ArgumentParser):
         parser.add_argument("year", type=int)
 
-    def __init__(self, session: Session, args: Namespace):
+    def __init__(self, session: FetchSession, args: Namespace):
         super().__init__(session, args)
 
         self.year: int = args.year
