@@ -6,9 +6,11 @@
 
 ## For python
 ```
+export SJTU_USER = xxxxxxxxx
+export SJTU_PASS = xxxxxxxxx
 python -m course_plus_data_fetcher
 ```
-## For docker
+## For docker configuration
 ```
 docker build -t *your docker tag*  .
 docker run -v */dir/json_directory* :/app/json -e SJTU_USER=xxxxxxxxx -e  SJTU_USER=xxxxxxx *your docker tag*
