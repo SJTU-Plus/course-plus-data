@@ -4,31 +4,16 @@
 import argparse
 import asyncio
 import logging
-import os
-
-from pysjtu.exceptions import LoginException, SessionException
+import json
 
 from .fetchers.base import fetchers
-from .fetchers.func import create_fetcher, get_default_args,process_json
+from .fetchers.func import create_fetcher, get_default_args,SJTU_login
 from .fetchers.session import FetchSession
 
 logging.basicConfig(level=logging.INFO)
 
-SJTU_USER = os.environ.get("SJTU_USER", None)
-SJTU_PASS = os.environ.get("SJTU_PASS", None)
-
-async def main(args: argparse.Namespace):
-    if not SJTU_USER or not SJTU_PASS:
-        logging.error("Missing SJTU_USER or SJTU_PASS.")
-        return
-
-    logging.info("Logging into SJTU.")
-    try:
-        session = FetchSession(SJTU_USER, SJTU_PASS)
-    except (LoginException, SessionException):
-        logging.exception("Error occur when logging.")
-        return
-
+async def fetch(args: argparse.Namespace,session:FetchSession):
+    
     fetcher = create_fetcher(args.fetcher, session, args)
     if fetcher is None:
         logging.error("Fetcher not found.")
@@ -37,18 +22,21 @@ async def main(args: argparse.Namespace):
     data = await fetcher.fetch()
 
     logging.info(f"Writing to {args.output_file}.")
-    await process_json(data,args.output_file)
-    logging.info("Done.")
+    with open(args.output_file,'w') as f:
+        json.dump(data,f,indent=1,ensure_ascii=False)
+    logging.info(f"Fetcher:{args.fetcher} Done.")
 
+async def auto_fetch():
+    session=await SJTU_login()
+    if(session is None):
+        logging.error("Login Failed.")
+        return
+    else:
+            for name in fetchers.keys():
+                await fetch(get_default_args(name),session)
+            logging.info("Done.")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Course plus data fetching utility.")
-    parser.add_argument("--output_file", help="Specify output filename.", required=False)
-    subparsers = parser.add_subparsers(help="Available fetchers.", dest="fetcher", required=False)
-    for name, cls in fetchers.items():
-            subparser = subparsers.add_parser(name)
-            cls.set_argparse(subparser)
-    args=parser.parse_args()
-    if not args.fetcher or not args.output_file:
-        args=get_default_args()
-    asyncio.run(main(args))
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(auto_fetch())

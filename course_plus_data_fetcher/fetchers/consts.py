@@ -3,3 +3,4 @@ HEADERS = {
     'Referer': 'https://i.sjtu.edu.cn/design/viewFunc_cxDesignFuncPageIndex.html?gnmkdm=N219904&layout=default'
 }
 TRIMESTER_MAP = {1: 3, 2: 12, 3: 16}
+FILEPATH='./json/'
