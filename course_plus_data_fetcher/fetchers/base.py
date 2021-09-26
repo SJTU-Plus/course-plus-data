@@ -3,7 +3,6 @@ from argparse import ArgumentParser, Namespace
 from typing import Dict, Type
 from .session import FetchSession
 
-
 class Fetcher(ABC):
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)
