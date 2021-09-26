@@ -1,12 +1,12 @@
 # course-plus-data
 
-Folked from skyzh/course-plus-data.
- Data for Course+.
+Data for Course+.
 
 ## For python
 ```
 export SJTU_USER = xxxxxxxxx
 export SJTU_PASS = xxxxxxxxx
+pip install pysjtu,beautifulsoup4
 python -m course_plus_data_fetcher
 ```
 ## For docker configuration
