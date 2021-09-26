@@ -1,7 +1,5 @@
 # course-plus-data
-## Folk from skyzh/course-plus-data.
-## Reconfigured and Maintained By ToolmanP.
-## My First Attempt to implement Docker
+## Folkedfrom skyzh/course-plus-data.
  Data for Course+.
 
 ## For python
