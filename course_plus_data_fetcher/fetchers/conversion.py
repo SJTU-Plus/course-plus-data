@@ -1,8 +1,6 @@
-import asyncio
 import logging
 import time
 from argparse import ArgumentParser, Namespace
-from functools import reduce
 from typing import List
 from httpx import ReadTimeout
 

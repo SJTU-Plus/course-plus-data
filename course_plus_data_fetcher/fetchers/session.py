@@ -2,7 +2,6 @@ from httpx import AsyncClient
 from pysjtu import Session as SJTUSession
 from .consts import HEADERS
 
-
 class FetchSession:
     def __init__(self, username: str, password: str):
         self._account_session = SJTUSession(username, password)

@@ -11,6 +11,7 @@ from .consts import FILEPATH
 
 SJTU_USER = os.environ.get("SJTU_USER", None)
 SJTU_PASS = os.environ.get("SJTU_PASS", None)
+
 logging.basicConfig(level=logging.INFO)
 
 async def SJTU_login():

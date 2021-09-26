@@ -4,7 +4,6 @@ import time
 from argparse import ArgumentParser, Namespace
 from functools import reduce
 from typing import List, Optional
-
 from httpx import ReadTimeout
 
 from .base import Fetcher
