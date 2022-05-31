@@ -70,13 +70,25 @@
  {
   "year": "2021-2022",
   "semester": "1",
-  "updated_at": "2021-12-08",
+  "updated_at": "2022-05-31",
   "first_day": "2021-09-13"
  },
  {
   "year": "2021-2022",
   "semester": "2",
-  "updated_at": "2022-02-23",
+  "updated_at": "2022-05-31",
   "first_day": "2022-02-14"
+ },
+ {
+  "year": "2021-2022",
+  "semester": "3",
+  "updated_at": "2022-05-31",
+  "first_day": "2022-06-20"
+ },
+ {
+  "year": "2022-2023",
+  "semester": "1",
+  "updated_at": "2022-05-31",
+  "first_day": "2022-09-12"
  }
 ]

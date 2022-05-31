@@ -8,7 +8,7 @@ from pysjtu import Session
 from .base import fetchers
 
 package_dir = Path(__file__).resolve().parent
-for (_, module_name, _) in iter_modules([package_dir]):
+for (_, module_name, _) in iter_modules([str(package_dir), ]):
     module = import_module(f"{__name__}.{module_name}")
 
 
