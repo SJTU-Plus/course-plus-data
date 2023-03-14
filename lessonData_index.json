@@ -96,5 +96,11 @@
   "semester": "2",
   "updated_at": "2023-02-23",
   "first_day": "2023-02-13"
+ },
+ {
+    "year": "2022-2023",
+    "semester": "3",
+    "updated_at": "2023-03-13",
+    "first_day": "2023-06-19"
  }
 ]
