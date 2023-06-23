@@ -1,4 +1,5 @@
 import asyncio
+import json
 import logging
 import time
 from argparse import ArgumentParser, Namespace
@@ -24,66 +25,17 @@ async def gather_with_concurrency(n, *tasks):
 class DescriptionFetcher(Fetcher):
     @staticmethod
     def set_argparse(parser: ArgumentParser):
-        parser.add_argument("year", type=int)
+        parser.add_argument("input_file", type=str)
 
     def __init__(self, session: Session, args: Namespace):
         super().__init__(session, args)
 
-        self.year: int = args.year
+        self.input_file: str = args.input_file
+        self.output_file: str = args.output_file
+
+        self.filter: List[str] = ['研究生院', '体育系']
 
         self.session = session
-
-    async def _get_index(self, year: int):
-        url = "https://i.sjtu.edu.cn/jxzxjhgl/jxzxjhck_cxJxzxjhckIndex.html"
-        payload = {
-            'jg_id': '',
-            'njdm_id': year,
-            'dlbs': '',
-            'zyh_id': '',
-            '_search': False,
-            'nd': int(time.time() * 1000),
-            'queryModel.showCount': 5000,
-            'queryModel.currentPage': 1,
-            'queryModel.sortName': 'bjgs',
-            'queryModel.sortOrder': 'desc',
-            'time': 0,
-        }
-        params = {
-            "doType": "query",
-            'gnmkdm': 'N153540'
-        }
-
-        r = await self.session.post(url, params=params, data=payload)
-        items = r.json()["items"]
-        return [item["jxzxjhxx_id"] for item in items]
-
-    async def _get_lessons(self, plan_id: str):
-        url = "https://i.sjtu.edu.cn/jxzxjhgl/jxzxjhkcxx_cxJxzxjhkcxxIndex.html"
-        payload = {
-            'jyxdxnm': '',
-            'jyxdxqm': '',
-            'yxxdxnm': '',
-            'yxxdxqm': '',
-            'shzt': '',
-            'kch': '',
-            'jxzxjhxx_id': plan_id,
-            'xdlx': '',
-            '_search': False,
-            'nd': int(time.time() * 1000),
-            'queryModel.showCount': 5000,
-            'queryModel.currentPage': 1,
-            'queryModel.sortName': 'jyxdxnm,jyxdxqm,kch',
-            'queryModel.sortOrder': 'asc',
-            'time': 3,
-        }
-        params = {
-            'doType': 'query',
-            'gnmkdm': 'N153540'
-        }
-
-        r = await self.session.post(url, params=params, data=payload)
-        items = r.json()["items"]
-        return {item["kch"]: item["kch_id"] for item in items}
 
     async def _get_detail(self, lesson_id: str):
         url = 'https://i.sjtu.edu.cn/jxjhgl/common_cxKcJbxx.html'
@@ -134,20 +86,24 @@ class DescriptionFetcher(Fetcher):
         return detail
 
     async def fetch(self) -> dict:
-        logging.info(f"Fetching: Year {self.year}")
+        logging.info(f"Fetching: Input file {self.input_file}")
 
-        logging.info("Fetching index.")
-        indexes = await self._get_index(self.year)
+        logging.info("Loading existing.")
+        with open(self.output_file, mode="r") as f:
+            output = json.load(f)
 
-        logging.info("Fetching plans.")
-        raw_lessons = await asyncio.gather(*(self._get_lessons(index) for index in indexes))
-        lessons = reduce(lambda x, y: {**(x if x else {}), **y}, raw_lessons)
+        logging.info("Loading lessons.")
+        with open(self.input_file, mode="r") as f:
+            lessons = {}
+            for lesson in json.load(f):
+                if lesson['kch'] not in output and lesson['kkxy'] not in self.filter:
+                    lessons[lesson['kch']] = lesson['kch_id']
 
         logging.info("Fetching details.")
         raw_details = await gather_with_concurrency(100, *(self._get_detail(lesson_id) for lesson_id in lessons.values()))
 
         logging.info("Parsing details.")
         details = list(map(self._parse_detail, raw_details))
-        output = {detail["meta"]["课程代码"]: detail for detail in details}
+        output.update({detail["meta"]["课程代码"]: detail for detail in details})
 
         return output

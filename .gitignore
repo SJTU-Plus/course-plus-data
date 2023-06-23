@@ -1,4 +1,5 @@
 **/*.html
+**/*.json
 .idea
 .vscode
 .env

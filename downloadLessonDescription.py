@@ -8,8 +8,10 @@ from requests import session
 from tqdm import tqdm
 
 STUDENT_ID = ''
-YEAR = 2019
-OUTPUT_DIR = Path(f'lesson_description_{YEAR}')
+# 在此填入学年和学期(1:秋季学期，2:春季学期，3:夏季小学期)
+ACADEMIC_YEAR: str = '2022-2023'
+SEMESTER: int = 3
+OUTPUT_DIR = Path(f'lesson_description_{ACADEMIC_YEAR}_{SEMESTER}')
 
 COOKIES = {
     'JSESSIONID': 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
@@ -32,165 +34,6 @@ def check_resp(resp):
     resp.raise_for_status()
 
 
-def fetch_plans_index(njdm_id):
-    url = f'https://i.sjtu.edu.cn/jxzxjhgl/jxzxjhck_cxJxzxjhckIndex.html'
-
-    resp = client.post(url, params={
-        'doType': 'query',
-        'gnmkdm': 'N153540',
-        'su': STUDENT_ID
-    }, data={
-        'jg_id': '',
-        'njdm_id': njdm_id,
-        'dlbs': '',
-        'zyh_id': '',
-        '_search': False,
-        'nd': timestamp(),
-        'queryModel.showCount': 5000,
-        'queryModel.currentPage': 1,
-        'queryModel.sortName': 'bjgs',
-        'queryModel.sortOrder': 'desc',
-        'time': 8,
-    })
-
-    check_resp(resp)
-    """
-    {
-        "bjgs": "49",
-        "date": "二○二○年八月七日",
-        "dateDigit": "2020年8月7日",
-        "dateDigitSeparator": "2020-8-7",
-        "day": "7",
-        "dlbs": "大类",
-        "jg_id": "02000",
-        "jgpxzd": "1",
-        "jhrs": "1450",
-        "jxzxjhxx_id": "A130C60979BB610EE055F8163ED16360",
-        "kcs": "58",
-        "listnav": "false",
-        "localeKey": "zh_CN",
-        "month": "8",
-        "njdm": "2020",
-        "njmc": "2020",
-        "pageable": true,
-        "queryModel": {
-            "currentPage": 1,
-            "currentResult": 0,
-            "entityOrField": false,
-            "limit": 15,
-            "offset": 0,
-            "pageNo": 0,
-            "pageSize": 15,
-            "showCount": 10,
-            "sorts": [],
-            "totalCount": 0,
-            "totalPage": 0,
-            "totalResult": 0
-        },
-        "rangeable": true,
-        "row_id": "1",
-        "rwbj": "班级",
-        "sfgazy": "否",
-        "totalResult": "150",
-        "userModel": {
-            "monitor": false,
-            "roleCount": 0,
-            "roleKeys": "",
-            "roleValues": "",
-            "status": 0,
-            "usable": false
-        },
-        "xqh_id": "02",
-        "xqmc": "闵行",
-        "xz": "4",
-        "year": "2020",
-        "zyfxgs": "0",
-        "zyh": "02010011",
-        "zyh_id": "02010011",
-        "zymc": "工科平台"
-    }
-    """
-    return resp.json().get('items')
-
-
-def fetch_plans_lesson(jxzxjhxx_id):
-    url = 'https://i.sjtu.edu.cn/jxzxjhgl/jxzxjhkcxx_cxJxzxjhkcxxIndex.html'
-
-    resp = client.post(url, params={
-        'doType': 'query',
-        'gnmkdm': 'N153540',
-        'su': STUDENT_ID
-    }, data={
-        'jyxdxnm': '',
-        'jyxdxqm': '',
-        'yxxdxnm': '',
-        'yxxdxqm': '',
-        'shzt': '',
-        'kch': '',
-        'jxzxjhxx_id': jxzxjhxx_id,
-        'xdlx': '',
-        '_search': False,
-        'nd': timestamp(),
-        'queryModel.showCount': 5000,
-        'queryModel.currentPage': 1,
-        'queryModel.sortName': 'jyxdxnm,jyxdxqm,kch',
-        'queryModel.sortOrder': 'asc',
-        'time': 3,
-    })
-
-    check_resp(resp)
-    """
-    {
-        "sqztmc": "保存",
-        "xsdm_01": 48,
-        "qsjsz": "无",
-        "sfyx": 0,
-        "xfyqjd_id": "A1A7FC3FCFC8318EE055F8163ED16360",
-        "kch_id": "EN061",
-        "kch": "EN061",
-        "jcbjmc": "是",
-        "zyh_id": "070101",
-        "jyxdxqm": "1",
-        "kcxzdm": "02",
-        "kkbmmc": "外国语学院",
-        "xsxxxx": "理论(3.0)",
-        "fxbj": "否",
-        "exwbj": "否",
-        "zymc": "数学与应用数学",
-        "zyfxmc": "无方向",
-        "sfls": 0,
-        "dlmc": "数学与应用数学",
-        "kcxzmc": "限选",
-        "sflsmc": "未落实",
-        "zxbj": "是",
-        "xdlx": "zx",
-        "jyxdxnm": "2020-2021",
-        "sfsjk": "否",
-        "yyxdxnxqmc": "2020-2021\/1",
-        "zyhxkcbj": "是",
-        "zyfx_id": "wfx",
-        "sfcj": "否",
-        "jxzxjhxx_id": "A1A7FC3FCFAF318EE055F8163ED16360",
-        "kclbmc": "公共课程类",
-        "kcmc": "大学英语（1）",
-        "totalresult": 84,
-        "zyzgkcbj": "否",
-        "ezybj": "否",
-        "jxzxjhkcxx_id": "A1A7FC3FCFCD318EE055F8163ED16360",
-        "xf": "3.0",
-        "jcbj": "1",
-        "nodestatusname": "[]",
-        "khfsdm": "考试",
-        "zxs": 48,
-        "xqmc": "闵行",
-        "shzt": "0",
-        "xfyqjdmc": "英语选修",
-        "row_id": 1
-    }
-    """
-    return resp.json().get('items')
-
-
 def fetch_lesson_detail(kch_id):
     url = 'https://i.sjtu.edu.cn/jxjhgl/common_cxKcJbxx.html'
 
@@ -208,21 +51,26 @@ def fetch_lesson_detail(kch_id):
 if __name__ == "__main__":
     OUTPUT_DIR.mkdir(exist_ok=False)
 
+    logger.info('开始读取课程详情')
+
+    with open('lesson_description_2020.json', 'r', encoding='utf-8') as f:
+        pool = json.load(f)
+    with open('lesson_conversion.json', 'r', encoding='utf-8') as f:
+        conversion = json.load(f)
+
     lesson_pool = {}
 
-    logger.info(f'开始下载{YEAR}级教学执行计划索引')
+    logger.info(f'开始读取{ACADEMIC_YEAR}学年第{SEMESTER}学期课程信息')
 
-    index = fetch_plans_index(YEAR)
-
-    logger.info(f'开始下载教学执行计划')
-
-    for item in tqdm(index):
-        jxzxjhxx_id = item.get('jxzxjhxx_id')
-        lessons = fetch_plans_lesson(jxzxjhxx_id)
+    with open(f'lessonData_{ACADEMIC_YEAR}_{SEMESTER}.json', 'r', encoding='utf-8') as f:
+        lessons = json.load(f)
         for lesson in lessons:
-            lesson_pool[lesson.get('kch_id')] = lesson.get('kch')
+            if lesson['kch'] in conversion:
+                lesson['kch'] = conversion[lesson['kch']]
+            if lesson['kch'] not in pool and lesson['kkxy'] not in ['研究生院', '体育系']:
+                lesson_pool[lesson['kch_id']] = lesson['kch']
 
-    logger.info(f'开始下载课程详情，大约需要7分钟')
+    logger.info(f'开始下载课程详情')
 
     for kch_id, kch in tqdm(lesson_pool.items()):
         file_path = OUTPUT_DIR/f'{kch}_{kch_id}.html'
@@ -231,9 +79,8 @@ if __name__ == "__main__":
 
     (OUTPUT_DIR/f'index.json').write_text(json.dumps(lesson_pool))
 
-    logger.info(f'开始解析课程详情，大约需要2分钟')
+    logger.info(f'开始解析课程详情')
 
-    pool = {}
     for p in tqdm(OUTPUT_DIR.glob('*.html')):
         soup = BeautifulSoup(p.read_bytes(), 'html.parser')
 
@@ -279,5 +126,5 @@ if __name__ == "__main__":
 
         pool[detail['meta']['课程代码']] = detail
 
-    Path(f'lesson_description_{YEAR}.json').write_text(
+    Path('lesson_description_2020.json').write_text(
         json.dumps(pool, ensure_ascii=False), encoding='UTF-8')
